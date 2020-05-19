@@ -3,7 +3,8 @@ var num = 75;
 var refresh  = 0;
 
 function setup(){
-	createCanvas(windowWidth, windowHeight);
+	var canv = createCanvas(windowWidth, windowHeight);
+	canv.style('display', 'block');
 	birds = new Array(num);
 	for(var i = 0; i < num; i++){
 		birds[i] = new Bird();
@@ -17,12 +18,6 @@ function draw(){
 		bird.update(birds);
 		bird.show();
 	}
-
-	// refresh++;
-	// if(refresh == 30){
-	// 	console.log(birds[0].vel);
-	// 	refresh = 0;
-	// }
 }
 
 function mousePressed(){
