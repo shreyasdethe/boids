@@ -20,8 +20,8 @@ function draw(){
 	}
 }
 
-function mousePressed(){
-	for(var bird of birds){
-		bird.vel.add(createVector(mouseX, mouseY).limit(5));
-	}
-}
+// function mousePressed(){
+// 	for(var bird of birds){
+// 		bird.vel.add(createVector(mouseX, mouseY).limit(5));
+// 	}
+// }
