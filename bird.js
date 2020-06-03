@@ -3,7 +3,7 @@ class Bird{
 		this.pos = createVector(random(width), random(height));
 		this.vel = p5.Vector.random2D();
 		this.acc = p5.Vector.random2D();
-		this.maxvel = 5;
+		this.maxvel = 7.5;
 	}
 
 
@@ -78,9 +78,6 @@ class Bird{
 		
 		// update
 		this.pos.add(this.vel);
-		// this.vel.add(this.acc);
-
-		// this.acc = this.acc.mult(0);
 	}
 
 
