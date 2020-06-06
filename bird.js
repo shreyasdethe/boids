@@ -3,11 +3,11 @@ class Bird{
 		this.pos = createVector(random(width), random(height));
 		this.vel = p5.Vector.random2D();
 		this.acc = p5.Vector.random2D();
-		this.maxvel = 7.5;
+		this.maxvel = 6;
 	}
 
 
-	update(other_birds){
+	update(other_birds, predators){
 
 		//-------------------------alignment - local group----------------------
 		var fov = 75;
@@ -66,6 +66,60 @@ class Bird{
 		this.acc.mult(0);
 
 		//----------------------------------------------------------------------
+		// Logic for predator
+		var predator_fov = 75;
+		//--------------------------------------------
+		// Finding all the nearby predators
+		var predator_neighbors = [];
+
+		for(var pred of predators){
+			var dis = dist(this.pos.x, this.pos.y, pred.pos.x, pred.pos.y)
+			if(dis < predator_fov){
+				predator_neighbors.push(pred);
+			}
+		}
+
+		//--------------------------------------------
+		// // Part 1 opposite direction velocity - This seems not be working best it needs more intelligences mainly concerning
+		// // 									   adding sentience to judge both direction and velocity together.
+		// if(predator_neighbors.length > 0){
+		// 	var avg_predator_vel = createVector();
+			
+		// 	for(pred of predator_neighbors){
+		// 		avg_predator_vel.add(pred.vel);	
+		// 	}
+
+		// 	avg_predator_vel.div(predator_neighbors.length);
+		// 	avg_predator_vel.limit(0.5);
+
+		// 	avg_predator_vel.mult(-1);
+
+		// 	this.acc.add(avg_predator_vel);
+		// 	this.vel.add(this.acc);
+		// 	this.acc.mult(0); 
+		// }
+
+
+		//--------------------------------------------
+		// Part 2 opposite velocity addition
+		if(predator_neighbors.length > 0){
+			var new_vel = createVector();
+
+			for(pred of predator_neighbors){
+				var dis = dist(this.pos.x, this.pos.y, pred.pos.x, pred.pos.y);
+
+				var temp_vel = p5.Vector.sub(pred.pos, this.pos);
+				temp_vel.mult(-1*dis*dis);
+				new_vel.add(temp_vel);
+			}
+			new_vel.limit(2.0);
+
+			this.acc.add(new_vel);
+			this.vel.add(this.acc);
+			this.acc.mult(0);
+		} 
+
+		//----------------------------------------------------------------------
 		// boundary conditions
 		if(this.pos.x > width) this.pos.x = 0;
 		if(this.pos.x < 0) this.pos.x = width;
@@ -81,14 +135,29 @@ class Bird{
 	}
 
 
-	show(){
+	show(predators){
 		push();
 		translate(this.pos.x, this.pos.y);
 		rotate(this.vel.heading() + PI/2);
 		noStroke();
 		var colblue = map(this.pos.x, 0, width, 0, 255);
 		var colred = map(this.pos.y, 0, height, 255, 0);
-		fill(colred, 51, colblue, 128);
+
+		var num_predators = 0;
+		var predator_fov_color = 100;
+		for(var pred of predators){
+			var dis = dist(this.pos.x, this.pos.y, pred.pos.x, pred.pos.y)
+			if(dis < predator_fov_color){
+				num_predators = num_predators + 1;
+			}
+		}
+		if (num_predators > 0){
+			fill(255, 0, 0, 128);
+		}
+		else{
+			fill(colred, 51, colblue, 128);
+		}
+		
 		beginShape();
 		vertex(0, 0);
 		vertex(-10, 10);
