@@ -73,7 +73,7 @@ class Bird{
 		var predator_neighbors = [];
 
 		for(var pred of predators){
-			var dis = dist(this.pos.x, this.pos.y, pred.pos.x, pred.pos.y)
+			var dis = dist(this.pos.x, this.pos.y, pred.pos.x, pred.pos.y);
 			if(dis < predator_fov){
 				predator_neighbors.push(pred);
 			}
@@ -151,12 +151,9 @@ class Bird{
 				num_predators = num_predators + 1;
 			}
 		}
-		if (num_predators > 0){
-			fill(255, 0, 0, 128);
-		}
-		else{
-			fill(colred, 51, colblue, 128);
-		}
+
+		if (num_predators > 0) fill(255, 0, 0, 128);
+		else fill(colred, 51, colblue, 128);
 		
 		beginShape();
 		vertex(0, 0);
