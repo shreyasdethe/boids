@@ -67,7 +67,7 @@ class Bird{
 
 		//----------------------------------------------------------------------
 		// Logic for predator
-		var predator_fov = 75;
+		var predator_fov = 25;
 		//--------------------------------------------
 		// Finding all the nearby predators
 		var predator_neighbors = [];
