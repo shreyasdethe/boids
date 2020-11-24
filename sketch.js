@@ -2,7 +2,7 @@ var birds;
 var num = 75;
 
 var predators;
-var num_predators = 1;
+var num_predators = 0;
 
 var refresh  = 0;
 
